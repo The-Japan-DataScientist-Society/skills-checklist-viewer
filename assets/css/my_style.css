@@ -1,0 +1,93 @@
+  
+  .biz-data-wrap .col-md-12:first-child, .eng-data-wrap .col-md-12:first-child ,.sci-data-wrap .col-md-12:first-child{
+    border-top:1px solid black;
+  }
+  .title{
+    border-bottom:1px solid black;
+    border-collapse:collapse;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    padding:7px;
+    cursor: pointer;
+    background-color:#E1F1FF;
+    min-width: 663px;
+    color: black;
+  }
+  .btn{
+    font-size: 16px;
+    
+  }
+  .btn-primary{
+    background-color:#0068b7;
+    color: #ffffff;
+  }
+  .title:hover{
+    background-color: #0068b7;
+    color:#FFF;
+  }
+  .content{
+    border-bottom: 1px solid black;
+  }
+  table th{
+    text-align: center;
+  }
+  table tr{
+    background-color: #FFF;
+  }
+  table thead tr:first-child{
+    background-color: #0068b7;
+    color: #ffffff;
+  }
+  
+   table.table-mobile tr:first-child{
+    background-color: #0068b7;
+    color: #ffffff;
+  }
+
+  .table{
+    margin-bottom: 0;
+  }
+  table tbody td {
+    text-align: center;
+  }
+
+  table tbody td:nth-child(3),
+  table tbody td:nth-child(4),
+  table tbody td:nth-child(5),
+  table tbody td:nth-child(6) {
+    text-align: left;
+  }
+
+  .content{
+    padding:0;
+  }
+  .content .col-sm-12{
+    padding:0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  table.dataTable{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .sort-td{
+    min-width:50px;
+  }
+  .medium-td{
+    min-width: 115px;
+  }
+
+  body{
+    font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro",Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	  font-size:16px;
+    background-color: #f5f3f5;
+  }
+
+  @media only screen and (max-width: 1000px) {
+  body {
+    font-size: 25px;
+  }
+
+}

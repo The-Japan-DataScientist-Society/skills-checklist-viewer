@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>データサイエンティスト スキルチェックリスト</title>
+  <link rel="shortcut icon" href="">
+  <meta charset="UTF-8">
+  <script src="assets/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/dataTables.bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/my_style.css">
+
+  <script src="assets/js/jquery.dataTables.min.js"></script>
+  <script src="assets/js/dataTables.bootstrap.min.js"></script>
+  <script src="environment/environment.js"></script>
+  <script src="assets/js/myscript.js"></script>
+  
+</head>
+<body>
+<nav class="navbar navbar-inverse" style="position: fixed; top:0; width:100%;z-index: 1000;border-radius: 0px !important;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="navbar-header col-md-2 col-sm-2">
+        <a class="navbar-brand" href="#">データサイエンティスト スキルチェックリスト</a>
+      </div>
+
+      <div class="col-md-5 col-sm-6">
+        <button class="btn btn-primary navbar-btn expandAll">全て展開</button>
+        <button class="btn btn-primary navbar-btn collapseAll">全て折りたたむ</button>
+        <button class="btn btn-primary navbar-btn reset">リセット</button>
+      </div>
+
+      <div class="col-md-5 col-sm-4">
+        <div class="input-group" style="padding-top: 8px;text-align: right;">
+            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="keyword" style="height: 36px; font-size: 16px;"/>
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search search-icon"></i></button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+  <div class="container-fluid" style="margin-top:50px; padding-bottom: 70px">
+    <div class = "row" style="margin-top: 10px; font-weight: bold;"> 各スキルカテゴリをクリックしてください</div>
+    <div class="row"><h3>ビジネス力</h3></div>
+    <div class="row biz-data-wrap">
+      
+    </div>
+    <div class="row" style="margin-top: 30px;"><h3>データサイエンス力</h3></div>
+    <div class="row sci-data-wrap">
+      
+    </div>
+    <div class="row" style="margin-top: 30px;"><h3>データエンジニアリング力</h3></div>
+    <div class="row eng-data-wrap">
+      
+    </div>
+  </div>
+
+</body>
+
+<script>
+
+  $(document).ready(function(){
+
+    init()
+    
+  });
+
+</script>
+
+</html>
