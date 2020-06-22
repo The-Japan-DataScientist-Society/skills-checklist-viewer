@@ -58,6 +58,10 @@
     text-align: left;
   }
 
+  table tbody td[colspan="8"] {
+    text-align: left;
+  }
+
   .content{
     padding:0;
   }
