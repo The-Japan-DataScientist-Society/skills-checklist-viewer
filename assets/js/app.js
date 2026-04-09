@@ -94,8 +94,16 @@ function roleBadge(col) {
   return `<span class="badge ${ROLE_COLORS[col] ?? 'bg-secondary'}">${col}</span>`
 }
 
+function escapeHTML(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 function escapeAttr(str) {
-  return String(str).replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return escapeHTML(str)
 }
 
 function rowSearchText(row, keys) {
@@ -111,13 +119,13 @@ function renderStandardTable(rows, roleCols, extraCols) {
   const bodyRows = rows.map(row => {
     const roles = roleCols.filter(c => row[c]).map(roleBadge).join(' ')
     const req   = row['必須スキル'] ? '<span class="badge badge-req">必須</span>' : ''
-    const extra = extraCols.map(c => `<td>${row[c] ?? ''}</td>`).join('')
+    const extra = extraCols.map(c => `<td data-label="${escapeHTML(c)}">${escapeHTML(row[c])}</td>`).join('')
     const txt   = escapeAttr(rowSearchText(row, ['スキルカテゴリ', 'サブカテゴリ', 'チェック項目', '分類', ...extraCols]))
     return `<tr class="skill-row" data-text="${txt}">
-      <td data-label="No">${row['No'] ?? ''}</td>
-      <td data-label="サブカテゴリ">${row['サブカテゴリ'] ?? ''}</td>
-      <td data-label="レベル"><span class="skill-level">${row['スキルレベル'] ?? ''}</span></td>
-      <td data-label="チェック項目">${row['チェック項目'] ?? ''}</td>
+      <td data-label="No">${escapeHTML(row['No'])}</td>
+      <td data-label="サブカテゴリ">${escapeHTML(row['サブカテゴリ'])}</td>
+      <td data-label="レベル"><span class="skill-level">${escapeHTML(row['スキルレベル'])}</span></td>
+      <td data-label="チェック項目">${escapeHTML(row['チェック項目'])}</td>
       ${roleCols.length ? `<td data-label="関連">${roles}</td>` : ''}
       <td data-label="必須">${req}</td>
       ${extra}
@@ -152,12 +160,12 @@ function renderValueCreationTable(rows) {
     const de  = row['DE'] ? roleBadge('DE') : ''
     const txt = escapeAttr(rowSearchText(row, ['フェーズ', 'スキルカテゴリ', 'サブカテゴリ', 'スキル定義', '★（見習い）', '★★（一人前）', '★★★（棟梁）']))
     return `<tr class="skill-row" data-text="${txt}">
-      <td data-label="No">${row['No'] ?? ''}</td>
-      <td data-label="サブカテゴリ">${row['サブカテゴリ'] ?? ''}</td>
-      <td data-label="スキル定義" class="text-muted">${row['スキル定義'] ?? ''}</td>
-      <td data-label="★見習い">${row['★（見習い）'] ?? ''}</td>
-      <td data-label="★★一人前">${row['★★（一人前）'] ?? ''}</td>
-      <td data-label="★★★棟梁">${row['★★★（棟梁）'] ?? ''}</td>
+      <td data-label="No">${escapeHTML(row['No'])}</td>
+      <td data-label="サブカテゴリ">${escapeHTML(row['サブカテゴリ'])}</td>
+      <td data-label="スキル定義" class="text-muted">${escapeHTML(row['スキル定義'])}</td>
+      <td data-label="★見習い">${escapeHTML(row['★（見習い）'])}</td>
+      <td data-label="★★一人前">${escapeHTML(row['★★（一人前）'])}</td>
+      <td data-label="★★★棟梁">${escapeHTML(row['★★★（棟梁）'])}</td>
       <td data-label="必須">${req.join(' ')}</td>
       <td data-label="DS">${ds}</td>
       <td data-label="DE">${de}</td>
@@ -193,7 +201,7 @@ function buildAccordion(catGroups, tableRenderer) {
       <h2 class="accordion-header">
         <button class="accordion-button" type="button"
           data-bs-toggle="collapse" data-bs-target="#${id}">
-          ${key} <span class="badge bg-secondary ms-2">${rows.length}</span>
+          ${escapeHTML(key)} <span class="badge bg-secondary ms-2">${rows.length}</span>
         </button>
       </h2>
       <div id="${id}" class="accordion-collapse collapse show">
@@ -210,7 +218,7 @@ function buildSheetContent(sheet, rows) {
     const phases = groupBy(rows, 'フェーズ')
     return phases.map(({ key: phase, rows: phaseRows }) => {
       const cats = groupBy(phaseRows, 'スキルカテゴリ')
-      return `<div class="phase-header">${phase}</div>
+      return `<div class="phase-header">${escapeHTML(phase)}</div>
         <div class="accordion mb-1">${buildAccordion(cats, renderValueCreationTable)}</div>`
     }).join('')
   }
@@ -226,7 +234,7 @@ function buildSheetContent(sheet, rows) {
   const superGroups = groupBy(rows, superKey)
   return superGroups.map(({ key, rows: sRows }) => {
     const cats = groupBy(sRows, 'スキルカテゴリ')
-    const hdr  = superGroups.length > 1 ? `<div class="super-group-header">${key}</div>` : ''
+    const hdr  = superGroups.length > 1 ? `<div class="super-group-header">${escapeHTML(key)}</div>` : ''
     return `${hdr}<div class="accordion mb-1">${buildAccordion(cats, tableRenderer)}</div>`
   }).join('')
 }
@@ -361,9 +369,9 @@ function buildSidebarNav() {
       if (body && !body.classList.contains('show')) {
         bootstrap.Collapse.getOrCreateInstance(body).show()
       }
-      // Scroll (offset for navbar + toolbar)
-      const offset = 52 + 46
-      const top = block.getBoundingClientRect().top + window.scrollY - offset
+      // Scroll to below the sticky toolbar
+      const toolbarBottom = document.getElementById('toolbar')?.getBoundingClientRect().bottom ?? 100
+      const top = block.getBoundingClientRect().top + window.scrollY - toolbarBottom - 8
       window.scrollTo({ top, behavior: 'smooth' })
     })
   })
@@ -396,7 +404,7 @@ async function loadSheet(sheet) {
     if (el) el.innerHTML = buildSheetContent(sheet, rows)
   } catch (e) {
     const el = document.getElementById(`content-${sheet.id}`)
-    if (el) el.innerHTML = `<div class="alert alert-danger m-2">読み込みエラー: ${e.message}</div>`
+    if (el) el.innerHTML = `<div class="alert alert-danger m-2">読み込みエラー: ${escapeHTML(e.message)}</div>`
   }
 }
 
