@@ -114,12 +114,12 @@ function renderStandardTable(rows, roleCols, extraCols) {
     const extra = extraCols.map(c => `<td>${row[c] ?? ''}</td>`).join('')
     const txt   = escapeAttr(rowSearchText(row, ['スキルカテゴリ', 'サブカテゴリ', 'チェック項目', '分類', ...extraCols]))
     return `<tr class="skill-row" data-text="${txt}">
-      <td>${row['No'] ?? ''}</td>
-      <td>${row['サブカテゴリ'] ?? ''}</td>
-      <td><span class="skill-level">${row['スキルレベル'] ?? ''}</span></td>
-      <td>${row['チェック項目'] ?? ''}</td>
-      ${roleCols.length ? `<td>${roles}</td>` : ''}
-      <td>${req}</td>
+      <td data-label="No">${row['No'] ?? ''}</td>
+      <td data-label="サブカテゴリ">${row['サブカテゴリ'] ?? ''}</td>
+      <td data-label="レベル"><span class="skill-level">${row['スキルレベル'] ?? ''}</span></td>
+      <td data-label="チェック項目">${row['チェック項目'] ?? ''}</td>
+      ${roleCols.length ? `<td data-label="関連">${roles}</td>` : ''}
+      <td data-label="必須">${req}</td>
       ${extra}
     </tr>`
   }).join('')
@@ -152,15 +152,15 @@ function renderValueCreationTable(rows) {
     const de  = row['DE'] ? roleBadge('DE') : ''
     const txt = escapeAttr(rowSearchText(row, ['フェーズ', 'スキルカテゴリ', 'サブカテゴリ', 'スキル定義', '★（見習い）', '★★（一人前）', '★★★（棟梁）']))
     return `<tr class="skill-row" data-text="${txt}">
-      <td>${row['No'] ?? ''}</td>
-      <td>${row['サブカテゴリ'] ?? ''}</td>
-      <td class="text-muted">${row['スキル定義'] ?? ''}</td>
-      <td>${row['★（見習い）'] ?? ''}</td>
-      <td>${row['★★（一人前）'] ?? ''}</td>
-      <td>${row['★★★（棟梁）'] ?? ''}</td>
-      <td>${req.join(' ')}</td>
-      <td>${ds}</td>
-      <td>${de}</td>
+      <td data-label="No">${row['No'] ?? ''}</td>
+      <td data-label="サブカテゴリ">${row['サブカテゴリ'] ?? ''}</td>
+      <td data-label="スキル定義" class="text-muted">${row['スキル定義'] ?? ''}</td>
+      <td data-label="★見習い">${row['★（見習い）'] ?? ''}</td>
+      <td data-label="★★一人前">${row['★★（一人前）'] ?? ''}</td>
+      <td data-label="★★★棟梁">${row['★★★（棟梁）'] ?? ''}</td>
+      <td data-label="必須">${req.join(' ')}</td>
+      <td data-label="DS">${ds}</td>
+      <td data-label="DE">${de}</td>
     </tr>`
   }).join('')
 
@@ -191,12 +191,12 @@ function buildAccordion(catGroups, tableRenderer) {
     const id = `acc-${++accCounter}`
     return `<div class="accordion-item">
       <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button"
+        <button class="accordion-button" type="button"
           data-bs-toggle="collapse" data-bs-target="#${id}">
           ${key} <span class="badge bg-secondary ms-2">${rows.length}</span>
         </button>
       </h2>
-      <div id="${id}" class="accordion-collapse collapse">
+      <div id="${id}" class="accordion-collapse collapse show">
         <div class="accordion-body p-0">${tableRenderer(rows)}</div>
       </div>
     </div>`
