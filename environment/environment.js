@@ -1,8 +1,4 @@
-// PR #4 branch (before merge)
-const BASE_URL = "https://raw.githubusercontent.com/The-Japan-DataScientist-Society/skills-checklist/refs/pull/4/head/"
-
-// After PR is merged, switch to:
-// const BASE_URL = "https://raw.githubusercontent.com/The-Japan-DataScientist-Society/skills-checklist/master/"
+const BASE_URL = "https://raw.githubusercontent.com/The-Japan-DataScientist-Society/skills-checklist/main/"
 
 const SHEET_URLS = {
   foundation:        BASE_URL + "foundation.csv",
