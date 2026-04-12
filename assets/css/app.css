@@ -1,0 +1,199 @@
+:root { --navbar-h: 52px; --sidebar-w: 200px; }
+
+body { padding-top: var(--navbar-h); }
+
+/* ── layout ── */
+#layout {
+  display: flex;
+  min-height: calc(100vh - var(--navbar-h));
+}
+
+/* ── sidebar ── */
+#sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--navbar-h);
+  height: calc(100vh - var(--navbar-h));
+  overflow-y: auto;
+  background: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  padding: 12px 0;
+}
+#sidebar .nav-link {
+  color: #495057;
+  font-size: 0.85rem;
+  padding: 6px 16px;
+  border-left: 3px solid transparent;
+  white-space: normal;
+  line-height: 1.3;
+}
+#sidebar .nav-link:hover { background: #e9ecef; }
+#sidebar .nav-link.active {
+  color: #0d6efd;
+  font-weight: 600;
+  border-left-color: #0d6efd;
+  background: #e7f3ff;
+}
+#sidebar-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  padding: 0 16px 8px;
+  letter-spacing: 0.05em;
+}
+
+/* ── main content ── */
+#main { flex: 1; min-width: 0; }
+
+/* ── sticky toolbar ── */
+#toolbar {
+  position: sticky;
+  top: var(--navbar-h);
+  z-index: 800;
+  background: #fff;
+  border-bottom: 1px solid #dee2e6;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#search { flex: 1 1 200px; max-width: 360px; }
+#search-count { font-size: 0.8rem; color: #6c757d; white-space: nowrap; }
+
+/* ── section headers ── */
+.section-toggle {
+  width: 100%;
+  text-align: left;
+  background: #343a40;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.section-toggle:hover { background: #495057; }
+.section-toggle .chevron { transition: transform 0.2s; font-size: 0.7rem; }
+.section-toggle.collapsed .chevron { transform: rotate(-90deg); }
+
+/* ── skill tables ── */
+.skill-table { font-size: 0.85rem; margin-bottom: 0; }
+.skill-table thead th { background: #f8f9fa; white-space: nowrap; }
+.skill-table td { vertical-align: middle; }
+
+.skill-level { color: #e6a817; font-weight: bold; white-space: nowrap; }
+
+.phase-header {
+  background: #6c757d;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-top: 12px;
+}
+.super-group-header {
+  background: #e9ecef;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: #495057;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.accordion-button { font-size: 0.88rem; }
+.accordion-button:not(.collapsed) { background-color: #e7f3ff; }
+
+.badge-bz  { background-color: #fd7e14; }
+.badge-ds  { background-color: #0d6efd; }
+.badge-de  { background-color: #198754; }
+.badge-vc  { background-color: #6f42c1; }
+.badge-req { background-color: #dc3545; }
+
+.skill-row.hidden     { display: none; }
+.accordion-item.hidden { display: none; }
+.section-block.hidden  { display: none; }
+
+/* ── mobile ── */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 0px; }
+  #sidebar { display: none; }
+
+  /* テーブル → カードレイアウト */
+  .table-responsive { overflow-x: visible; }
+  .skill-table,
+  .skill-table tbody { display: block; }
+  .skill-table thead { display: none; }
+
+  .skill-table tr {
+    display: block;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    background: #fff;
+  }
+
+  /* デフォルトは非表示 */
+  .skill-table td {
+    display: none;
+    border: none;
+    padding: 2px 0;
+  }
+
+  /* レベル + サブカテゴリ: 1行目・小さめ */
+  .skill-table td[data-label="レベル"] {
+    display: inline;
+    font-size: 0.82rem;
+    margin-right: 6px;
+  }
+  .skill-table td[data-label="サブカテゴリ"] {
+    display: inline;
+    font-size: 0.82rem;
+    color: #6c757d;
+  }
+
+  /* チェック項目: 2行目・メインテキスト */
+  .skill-table td[data-label="チェック項目"] {
+    display: block;
+    padding: 4px 0 2px;
+    font-size: 0.9rem;
+  }
+
+  /* 関連・必須バッジ */
+  .skill-table td[data-label="関連"],
+  .skill-table td[data-label="必須"] {
+    display: inline-block;
+    margin-right: 4px;
+  }
+
+  /* value_creation */
+  .skill-table td[data-label="スキル定義"] {
+    display: block;
+    font-size: 0.78rem;
+    color: #6c757d;
+    padding: 3px 0 1px;
+  }
+  .skill-table td[data-label="★見習い"],
+  .skill-table td[data-label="★★一人前"],
+  .skill-table td[data-label="★★★棟梁"] {
+    display: block;
+    font-size: 0.82rem;
+    padding: 2px 0;
+  }
+  .skill-table td[data-label="★見習い"]::before   { content: "★ 見習い：";   color: #e6a817; font-weight: bold; }
+  .skill-table td[data-label="★★一人前"]::before  { content: "★★ 一人前：";  color: #e6a817; font-weight: bold; }
+  .skill-table td[data-label="★★★棟梁"]::before  { content: "★★★ 棟梁："; color: #e6a817; font-weight: bold; }
+  .skill-table td[data-label="DS"],
+  .skill-table td[data-label="DE"] {
+    display: inline-block;
+    margin-right: 4px;
+  }
+}
