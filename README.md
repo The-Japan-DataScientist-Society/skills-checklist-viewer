@@ -24,11 +24,6 @@ https://the-japan-datascientist-society.github.io/skills-checklist-viewer/
 - [Excel版](https://www.datascientist.or.jp/common/docs/skillcheck_ver6.00.xlsx)
 - CSV版: [skills-checklist リポジトリ](https://github.com/The-Japan-DataScientist-Society/skills-checklist)
 
-## 開発者向け
-
-データソースは [`environment/environment.js`](environment/environment.js) で管理しています。  
-PR マージ後は `BASE_URL` を `master` ブランチのURLに変更してください。
-
 #### 引用・改変時の注意事項
 
 - チェックリストを引用される場合「一般社団法人データサイエンティスト協会 スキルチェックリストより引用」と引用元を明示願います。その他については著作権法に従っての引用を願います。
